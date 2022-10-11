@@ -1,7 +1,7 @@
 program calculation
     implicit none
     
-    ! these variable declaration belongs to line 44
+    ! these variable declaration belongs to line 49
     ! this is because fortran needs you to have your variable delared from the start,
     ! variable declarations can't happn betwen codes but at the very start
     real :: float_num = 1.111111111111111
@@ -12,6 +12,9 @@ program calculation
     integer :: low = 1, high = 10
 
     real, parameter :: PI = 3.1415  !the "parameter" keyword is for declaring a constant value
+
+    ! variables for conditionals from line 92
+    integer :: age = 16
 
     ! a simple program collecting user input and outputing it with a hello statement
     ! creating variables for user input
@@ -84,6 +87,38 @@ program calculation
     print "(a14, f3.1)", "TAN(1.5708) = ", TAN(1.5708)
     print "(a10, f3.1)", "ASIN(0) = ", ASIN(0.0)
     print "(a10, f3.1)", "ACOS(0) = ", ACOS(0.0)
-    print "(a10, f3.1)", "ATAN(0) = ", ATAN(0.0)
+    print "(a10, f3.1, /)", "ATAN(0) = ", ATAN(0.0)
+
+    ! ################## Conditionals ##################
+    ! Relational Operators : == /= > < >= <=
+    ! Logical Operators : .and. .or. .not.
+    if ((age >= 5) .and. (age <= 6)) then
+        print *, "Kindergarten"
+    else if ((age >= 7) .and. (age <= 13)) then
+        print *, "Middle School"
+    else if ((age >= 14) .and. (age <= 18)) then
+        print *, "High School"
+    else
+        print *, "Stay Home"
+    end if
+
+    print *, .true. .or. .false.
+    print *, .not. .true.
+    print *, 5 /= 9
+    
+    ! Can be used with letters
+    print *, "a" < "b"
+    
+    ! Select case, kind of similar to switch in c++
+    select case (age)
+    case (5)
+        print *, "Kindergarten"
+    case (6:13)
+        print *, "Middle School"
+    case (14,15,16,17,18)
+        print *, "High School"
+    case default
+        print *, "Stay Home"
+    end select
 
 end program calculation
