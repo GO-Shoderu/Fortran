@@ -20,6 +20,21 @@ program calculation
     integer :: n = 0, m = 1
     integer :: secret_num = 7
 
+    ! variables for arrays
+    integer, dimension(1:5) :: a1, a2, a3
+    real, dimension(1:50) :: aR1
+    ! Create multidimensional array (Matrix)
+    integer, dimension(5,5) :: a4
+    integer :: l, o, x, y
+    
+    ! Define an array thats size is determined
+    ! at run time
+    integer, dimension(:), allocatable :: a5
+    integer :: num_vals = 0
+    
+    integer, dimension(1:9) :: a6 = (/ 1,2,3,4,5,6,7,8,9 /)
+    integer, dimension(1:3,1:3) :: a7
+
     ! a simple program collecting user input and outputing it with a hello statement
     ! creating variables for user input
     character (len = 20) :: f_name, l_name
@@ -155,5 +170,92 @@ program calculation
         read *, n
     end do
     print *, "You guessed it!"
+
+    ! #################### Arrays #######################################
+  
+    ! Assign values (Starts at index 1)
+    a1(1) = 5
+    ! Retrieve value
+    print "(i1)", a1(1)
+    
+    ! Assign values with a loop
+    do l = 1,5
+        a1(l) = l
+    end do
+    do l = 1,5
+        print "(i1)", a1(l)
+    end do
+    
+    ! Get a range
+    print "(3i2)", a1(1:3)
+    
+    ! Get a range with an increment
+    print "(2i2)", a1(1:3:2)
+    
+    ! Assign values to a multidimensional array
+    do l = 1,5
+        do o = 1, 5
+        a4(l,o) = l
+        end do
+    end do
+    do l = 1,5
+        do o = 1, 5
+        print "(i1,a1,i1,a3,i1)", l, " ", o, " : ", a4(l,o)
+        end do
+    end do
+    
+    ! Use an implied do loop to print each row
+    ! on one line
+    do l = 1,5
+        print "(5i1)", ( a4(l,o), o = 1,5 )
+    end do
+    
+    ! Get size
+    print "(i2)", Size(a1)
+    print "(i2)", Size(a4)
+    
+    ! Number of dimensions
+    print "(i2)", Rank(a4)
+    
+    ! Elements in each dimension
+    print "(i2)", Shape(a4)
+    
+    ! Define array size at run time
+    print *, "Size of array? "
+    read *, num_vals
+    allocate(a5(1:num_vals))
+    do l = 1,num_vals
+        a5(l) = l
+    end do
+    do l = 1,num_vals
+        print "(i1)", a5(l)
+    end do
+    
+    ! Change all values in array
+    a2 = (/1,2,3,6,7/)
+    
+    ! Implied do loop
+    print "(5i1)", ( a2(o), o = 1,5 )
+    
+    ! Reshape the ARRAY from 1x9 t0 3x3
+    a7 = reshape(a6, (/ 3, 3 /))
+    
+    ! Check if values are equal across
+    ! the 1 dimension
+    print "(l1)", all(a1==a2, 1)
+    
+    ! Are any equal?
+    print "(l1)", any(a1==a2, 1)
+    
+    ! How many are equal
+    print "(i1)", count(a1==a2, 1)
+    
+    ! Get min and max value
+    print "(i1)", maxval(a1)
+    print "(i1)", minval(a1)
+    
+    ! Get product and sum
+    print "(i3)", product(a1)
+    print "(i2)", sum(a1)
 
 end program calculation
